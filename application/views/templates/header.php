@@ -51,8 +51,8 @@
 
           <ul class="right">
             <!-- Dropdown Trigger -->
-            <li><font class="hide-on-med-and-down color-sipaa">Sistema Integral de Procesos Académicos y Administrativos</font></li>
-            <li><font class="hide-on-large-only color-sipaa">SIPAA</font></li>
+            <li><font class="hide-on-med-and-down color-sipaa">Sistema de Administración</font></li>
+            <li><font class="hide-on-large-only color-sipaa">Admin</font></li>
             <li><a class="dropdown-button" href="#" data-activates="dropdown1"><i class="material-icons color-sipaa">more_vert</i></a></li>
           </ul>
 
