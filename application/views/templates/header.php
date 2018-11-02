@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +21,37 @@
     <script type="text/javascript" src="<?= base_url('materialize/js/materialize.min.js'); ?>"></script>
     <!-- Sweetalert (https://sweetalert.js.org/)-->
     <script type="text/javascript" src="<?= base_url('materialize/js/sweetalert.min.js'); ?>"></script>
+    <!-- estilos del menu -->
+    <?php if ($menu): ?>
+    <style type="text/css">
+      /* controla los estilos del sidenav */
+      header, main, footer {
+        padding-left: 300px;
+        background-color: #f5f5f5; /* Color en el body */
+      }
+
+      @media only screen and (max-width : 992px) {
+        header, main, footer {
+          padding-left: 0;
+        }
+      }
+
+      nav {
+        padding-right: 300px;
+      }
+
+      @media only screen and (max-width : 992px) {
+        nav {
+          padding-right: 0px;
+        }
+      }
+
+      main {
+        margin-top: 0px;
+      }
+    </style>
+    <?php endif; ?>
+    <!-- fin -->
 </head>
 
 <body>
@@ -37,9 +66,9 @@
   <div class="navbar-fixed">
     <nav>
         <div class="nav-wrapper blue-grey lighten-5">
-          <a href="#" data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons color-sipaa">menu</i></a>
+          <a href="#" data-activates="slide-out" class="button-collapse top-nav full hide-on-large-only <?= $menu? 'show': 'hide' ?>"><i class="material-icons color-sipaa">menu</i></a>
 
-          <ul class="left">
+          <ul class="left <?= $menu? 'show': 'hide' ?>">
             <li><div class="hide-on-small-only logo-sipaa"><img src="https://placehold.it/250x250"></div></li>
             <li><div class="hide-on-med-and-up logo-sipaa-resp"><img src="https://placehold.it/250x250"></div></li>
           </ul>
@@ -55,20 +84,27 @@
     </nav>
   </div>  
   <!-- Dropdown del botón superior der. -->
-  <ul id="dropdown1" class="dropdown-content">
-    <li><a href="#!" style="color: #0052A2 !important;"><i class="material-icons">home</i>Inicio</a></li>
-    <li class="divider"></li>
-    <li><a href="#!" style="color: #0052A2 !important;"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
-  </ul>
+  <?php if ($menu): ?>
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a href="#!" style="color: #0052A2 !important;"><i class="material-icons">person</i>Perfil</a></li>
+      <li class="divider"></li>
+      <li><a href="<?= base_url('welcome/logout/1'); ?>" style="color: #0052A2 !important;"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+    </ul>
+  <?php else: ?>
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a href="#!" style="color: #0052A2 !important;"><i class="material-icons">info</i>Acerca de</a></li>
+    </ul>
+  <?php endif; ?>
   <!-- menu lateral -->
-  <ul id="slide-out" class="side-nav fixed" id="mobile-demo">
+  <?php if ($menu): ?>
+  <ul id="slide-out" class="side-nav fixed <?= $menu? 'show': 'hide' ?>" id="mobile-demo">
     <li><div class="user-view">
       <div class="background">
         <img src="<?= base_url('materialize/img/commons/office.jpg'); ?>">
       </div>
       <a href="#!user"><img class="circle" src="<?= base_url('materialize/img/commons/user.jpg'); ?>"></a>
-      <a href="#!name"><span class="white-text name">Fernando Camarillo</span></a>
-      <a href="#!email"><span class="white-text email">camarillo.fer@gmail.com</span></a>
+      <a href="#!name"><span class="white-text name"><?= $this->session->userdata('username'); ?></span></a>
+      <a href="#!email"><span class="white-text email"><?= $this->session->userdata('email'); ?></span></a>
     </div></li>
     <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
     <li><a href="#!">Second Link</a></li>
@@ -76,4 +112,5 @@
     <li><a class="subheader">Subheader</a></li>
     <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
   </ul>
+  <?php endif; ?>
 </header>

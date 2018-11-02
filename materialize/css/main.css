@@ -15,32 +15,6 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
-/* controla los estilos del sidenav */
-header, main, footer {
-  padding-left: 300px;
-  background-color: #f5f5f5; /* Color en el body */
-}
-
-@media only screen and (max-width : 992px) {
-  header, main, footer {
-    padding-left: 0;
-  }
-}
-
-nav {
-  padding-right: 300px;
-}
-
-@media only screen and (max-width : 992px) {
-  nav {
-    padding-right: 0px;
-  }
-}
-
-main {
-	margin-top: 0px;
-}
-
 /* Footer Adhesivo */
 body {
     display: flex;

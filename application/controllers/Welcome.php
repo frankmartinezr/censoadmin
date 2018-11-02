@@ -18,10 +18,69 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this->load->model('login/login_model');
+	}
 	public function index()
 	{
-		$this->load->view('templates/header');
-		$this->load->view('templates/main');
+		$data['menu'] = FALSE;
+		$this->load->view('templates/header', $data);
+		$this->load->view('login/sign_in');
 		$this->load->view('templates/footer');
+	}
+
+	public function login()
+	{
+		$input_user = $this->input->post('input_user');
+		$input_psw = $this->input->post('input_psw');
+
+		$result = $this->login_model->obtenerLogin($input_user, $input_psw);
+		$json = get_object_vars($result[0]);
+		
+		if ($json['logged_in']) {
+			
+			$userdata = array(
+				'username'  => $json['nombre'],
+				'user_id'	=> $json['idusuario'],
+				'user_pic'	=> $json['foto'],
+				'email'     => $json['correo'],
+				'logged_in' => TRUE
+			);
+
+			$this->session->set_userdata($userdata);
+
+			$json['main'] = base_url('welcome/main');
+		}
+		else {
+
+			$this->logout(FALSE);
+		}
+
+		echo json_encode($json);
+	}
+
+	public function main()
+	{
+		$logged_in = $this->session->userdata('logged_in');
+		
+		if ($logged_in) {
+
+			$data['menu'] = TRUE;
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/main');
+			$this->load->view('templates/footer');
+		}
+		else {
+
+			$this->logout(TRUE);
+		}
+	}
+
+	public function logout($redirect)
+	{
+		$this->session->sess_destroy();
+		if ($redirect) { header("Location: ".base_url('')); }
 	}
 }

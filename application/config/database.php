@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'DES-FMARTINEZR\SQLEXPRESS01',
+	'hostname' => 'INSPIRON15',
 	'username' => 'sa',
 	'password' => 'fmartinezr',
 	'database' => 'censo',
