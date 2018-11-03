@@ -86,7 +86,7 @@
   <!-- Dropdown del botón superior der. -->
   <?php if ($menu): ?>
     <ul id="dropdown1" class="dropdown-content">
-      <li><a href="#!" style="color: #0052A2 !important;"><i class="material-icons">person</i>Perfil</a></li>
+      <li><a class="waves-effect waves-light modal-trigger" href="#modal_perfil" style="color: #0052A2 !important;"><i class="material-icons">person</i>Perfil</a></li>
       <li class="divider"></li>
       <li><a href="<?= base_url('welcome/logout/1'); ?>" style="color: #0052A2 !important;"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
     </ul>
@@ -97,20 +97,23 @@
   <?php endif; ?>
   <!-- menu lateral -->
   <?php if ($menu): ?>
-  <ul id="slide-out" class="side-nav fixed <?= $menu? 'show': 'hide' ?>" id="mobile-demo">
-    <li><div class="user-view">
-      <div class="background">
-        <img src="<?= base_url('materialize/img/commons/office.jpg'); ?>">
-      </div>
-      <a href="#!user"><img class="circle" src="<?= base_url('materialize/img/commons/user.jpg'); ?>"></a>
-      <a href="#!name"><span class="white-text name"><?= $this->session->userdata('username'); ?></span></a>
-      <a href="#!email"><span class="white-text email"><?= $this->session->userdata('email'); ?></span></a>
-    </div></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-  </ul>
-  <?php endif; ?>
+    <ul id="slide-out" class="side-nav fixed <?= $menu? 'show': 'hide' ?>" id="mobile-demo">
+      <li><div class="user-view">
+        <div class="background">
+          <img src="<?= base_url('materialize/img/commons/office.jpg'); ?>">
+        </div>
+        <a href="#!user"><img class="circle" src="<?= base_url('materialize/img/commons/user.jpg'); ?>"></a>
+        <a href="#!name"><span class="white-text name"><?= $this->session->userdata('username'); ?></span></a>
+        <a href="#!email"><span class="white-text email"><?= $this->session->userdata('email'); ?></span></a>
+      </div></li>
+      <li><a class="waves-effect waves-light modal-trigger" href="#modal_perfil"><i class="material-icons">person</i>Perfil</a></li>
+      <li><a class="waves-effect waves-light" href="<?= base_url('welcome/logout/1'); ?>"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Subheader</a></li>
+      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+    </ul>
+    <!-- Modal Perfil -->
+    <?= $perfil; ?>
+    <?php endif; ?>
+
 </header>

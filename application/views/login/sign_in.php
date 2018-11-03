@@ -22,9 +22,10 @@
                     </div>
                     <div class="card-action">
                         <!-- -->
-                        <button type="submit" class="waves-effect waves-light btn blue"><i class="material-icons right">check</i>ENTRAR</button>
+                        <button type="submit" class="waves-effect waves-light btn btn-login blue"><i class="material-icons right">check</i>ENTRAR</button>
                     </div>
                 </form>
+            <div class="progress progress-login blue hide"><div class="indeterminate red"></div></div>
             </div>
         </div>
     </div>
@@ -43,11 +44,11 @@ $(document).ready(function(){
             data: formdata
         }).done(function(response, textStatus, jqXHR) {
             //console.log(response);
-            var json = jQuery.parseJSON(response);console.log(json);
+            var json = jQuery.parseJSON(response);
 
             if (json.logged_in) {
-                console.log("redirecting...");
-                setTimeout(function(){window.location.replace(json.main);}, 3000);
+                disableComponents();
+                setTimeout(function(){window.location.replace(json.main);}, 1500);
             }
             else {
 
@@ -61,5 +62,12 @@ $(document).ready(function(){
             swal({ title: "Error", text: textStatus, icon: "error", button: "Aceptar" });
         });
     });
+
+    function disableComponents() {
+        $("#input_user").prop('disabled', 'true');
+        $("#input_psw").prop('disabled', 'true');
+        $(".btn-login").addClass('disabled');
+        $(".progress-login").removeClass('hide');
+    }
 });
 </script>

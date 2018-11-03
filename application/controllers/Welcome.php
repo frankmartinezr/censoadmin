@@ -36,7 +36,7 @@ class Welcome extends CI_Controller {
 		$input_user = $this->input->post('input_user');
 		$input_psw = $this->input->post('input_psw');
 
-		$result = $this->login_model->obtenerLogin($input_user, $input_psw);
+		$result = $this->login_model->obtenerLogin($input_user, $input_psw, KEY_PASS);
 		$json = get_object_vars($result[0]);
 		
 		if ($json['logged_in']) {
@@ -44,6 +44,7 @@ class Welcome extends CI_Controller {
 			$userdata = array(
 				'username'  => $json['nombre'],
 				'user_id'	=> $json['idusuario'],
+				'user_cv'	=> $json['clave'],
 				'user_pic'	=> $json['foto'],
 				'email'     => $json['correo'],
 				'logged_in' => TRUE
@@ -68,6 +69,7 @@ class Welcome extends CI_Controller {
 		if ($logged_in) {
 
 			$data['menu'] = TRUE;
+			$data['perfil'] = $this->load->view('login/modal_perfil', '', TRUE);
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/main');
 			$this->load->view('templates/footer');
@@ -82,5 +84,16 @@ class Welcome extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		if ($redirect) { header("Location: ".base_url('')); }
+	}
+
+	public function cambioperfil()
+	{
+		$idusuario = $this->input->post('idusuario');
+		$nombre = $this->input->post('nombre');
+		$correo = $this->input->post('correo');
+
+		$result = $this->login_model->cambioPerfil($idusuario, $nombre, $correo);
+		$json = get_object_vars($result[0]);
+		echo json_encode($json);
 	}
 }
