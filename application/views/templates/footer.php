@@ -1,12 +1,12 @@
 
-<footer class="page-footer blue darken-3">
+<footer class="page-footer grey darken-1">
 
     <div class="container">
 
     <div class="row">
-        <div class="col s12 m4 l4"><a class="grey-text text-lighten-4 left" href="#!">© 2018 Sistema - Nombre</a></div>
-        <div class="col s12 m4 l4"><a class="grey-text text-lighten-4 left" href="#!">Aviso de Privacidad</a></div>
-        <div class="col s12 m4 l4"><a class="grey-text text-lighten-4 left" href="#!">Versión: 0.0.1</a></div>
+        <div class="col s12 m4 l4"><a class="grey-text text-lighten-4 left" href="#!">© 2018 Sistema</a></div>
+        <div class="col s12 m4 l4"><a class="grey-text text-lighten-4 left" href="#!">Términos de uso</a></div>
+        <div class="col s12 m4 l4"><a class="grey-text text-lighten-4 left" href="#!">Privacidad y cookies</a></div>
     </div>
 
     </div>

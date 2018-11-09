@@ -108,9 +108,9 @@
       </div></li>
       <li><a class="waves-effect waves-light modal-trigger" href="#modal_perfil"><i class="material-icons">person</i>Perfil</a></li>
       <li><a class="waves-effect waves-light" href="<?= base_url('welcome/logout/1'); ?>"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
-      <li><div class="divider"></div></li>
-      <li><a class="subheader">Subheader</a></li>
-      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+      <!--<li><a class="subheader">Administración General</a></li>-->
+      <!--<li><a class="waves-effect" href="#!"><i class="material-icons">person</i>Modulos</a></li>-->
+      <?= $side_menu; ?>
     </ul>
     <!-- Modal Perfil -->
     <?= $perfil; ?>

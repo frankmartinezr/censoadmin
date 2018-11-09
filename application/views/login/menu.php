@@ -1,0 +1,1 @@
+<li><a class="waves-effect" href="<?= base_url($submenu->ruta); ?>"><i class="material-icons"><?= $submenu->icono ?></i><?= $submenu->modulo ?></a></li>

@@ -29,4 +29,18 @@ class Login_model extends CI_Model {
 		return $query->result();
 	}
 
+	function modulos($user)
+	{
+		$query = $this->db->query("usp_sismenu 1, '$user', 0");
+
+		return $query->result();
+	}
+
+	function menus($user, $idmodulo)
+	{
+		$query = $this->db->query("usp_sismenu 2, '$user', $idmodulo");
+
+		return $query->result();
+	}
+
 }

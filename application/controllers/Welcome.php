@@ -23,6 +23,7 @@ class Welcome extends CI_Controller {
 
 		$this->load->model('login/login_model');
 	}
+	
 	public function index()
 	{
 		$data['menu'] = FALSE;
@@ -67,9 +68,11 @@ class Welcome extends CI_Controller {
 		$logged_in = $this->session->userdata('logged_in');
 		
 		if ($logged_in) {
-
+			$user = $this->session->userdata('user_cv');
 			$data['menu'] = TRUE;
 			$data['perfil'] = $this->load->view('login/modal_perfil', '', TRUE);
+			$data['side_menu'] = $this->menu($user);
+			$this->session->set_userdata('side_menu', $data['side_menu']);
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/main');
 			$this->load->view('templates/footer');
@@ -95,5 +98,27 @@ class Welcome extends CI_Controller {
 		$result = $this->login_model->cambioPerfil($idusuario, $nombre, $correo);
 		$json = get_object_vars($result[0]);
 		echo json_encode($json);
+	}
+
+	private function menu($user)
+	{
+		$menu = "";
+		$modulos = $this->login_model->modulos($user);
+
+		foreach ($modulos as $modulo) {
+
+			$data['header'] = $modulo->header;
+			$menu .= $this->load->view('login/modulo', $data, TRUE);
+
+			$menus = $this->login_model->menus($user, $modulo->idmodulo);
+
+			foreach ($menus as $submenu) {
+
+				$data['submenu'] = $submenu;
+				$menu .= $this->load->view('login/menu', $data, TRUE);
+			}
+		}
+
+		return $menu;
 	}
 }
