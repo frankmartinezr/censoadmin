@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Modulo extends CI_Controller {
+class Marca extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -25,7 +25,7 @@ class Modulo extends CI_Controller {
 
 		if ($logged_in) {
 			#carga modelos necesarios:
-			$this->load->model('adming/modulo_model');
+			$this->load->model('cat/marca_model');
 		}
 		else {
 			#no existe sesion activa
@@ -39,25 +39,21 @@ class Modulo extends CI_Controller {
 		$data['menu'] = TRUE;
 		$data['perfil'] = $this->load->view('login/modal_perfil', '', TRUE);
 		$data['side_menu'] = $this->session->userdata('side_menu');
-		$data['registros'] = $this->modulo_model->obtenerRegistros();
-		$data['categorias'] = $this->modulo_model->obtenerCategorias();
+		$data['registros'] = $this->marca_model->registros();
 		
 		$this->load->view('templates/header', $data);
-		$this->load->view('adming/modulo_index_view');
+		$this->load->view('cat/marca_index_view');
 		$this->load->view('templates/footer');
 	}
 
 	public function create()
 	{
-		$idmodulo		= $this->input->post('idmodulo');
+		$idmarca		= $this->input->post('idmarca');
 		$descripcion	= $this->input->post('descripcion');
-		$icono			= $this->input->post('icono');
-		$ruta			= $this->input->post('ruta');
 		$activo			= $this->input->post('activo');
-		$parent			= $this->input->post('parent');
 		$usumodif		= $this->input->post('usumodif');
 
-		$result = $this->modulo_model->crear($idmodulo, $descripcion, $icono, $ruta, $activo, $parent, $usumodif);
+		$result = $this->marca_model->crear($idmarca, $descripcion, $activo, $usumodif);
 
 		$json = get_object_vars($result[0]);
         echo json_encode($json);
@@ -65,15 +61,12 @@ class Modulo extends CI_Controller {
 
 	public function edit()
 	{
-		$idmodulo		= $this->input->post('idmodulo');
+		$idmarca		= $this->input->post('idmarca');
 		$descripcion	= $this->input->post('descripcion');
-		$icono			= $this->input->post('icono');
-		$ruta			= $this->input->post('ruta');
 		$activo			= $this->input->post('activo');
-		$parent			= $this->input->post('parent');
 		$usumodif		= $this->input->post('usumodif');
 
-		$result = $this->modulo_model->editar($idmodulo, $descripcion, $icono, $ruta, $activo, $parent, $usumodif);
+		$result = $this->marca_model->editar($idmarca, $descripcion, $activo, $usumodif);
 
 		$json = get_object_vars($result[0]);
         echo json_encode($json);
@@ -81,21 +74,10 @@ class Modulo extends CI_Controller {
 
 	public function delete()
 	{
-		$idmodulo = $this->input->post('idmodulo');
-		$result = $this->modulo_model->eliminar($idmodulo);
+		$idmarca = $this->input->post('idmarca');
+		$result = $this->marca_model->eliminar($idmarca);
 
 		$json = get_object_vars($result[0]);
-        echo json_encode($json);
-	}
-
-	public function change()
-	{
-		$idmodulo = $this->input->post('idmodulo');
-		$activo = $this->input->post('activo');
-
-		$result = $this->modulo_model->cambio($idmodulo, $activo);
-
-		$json = get_object_vars($result[0]);
-        echo json_encode($json);
+		echo json_encode($json);
 	}
 }

@@ -59,5 +59,5 @@
 })(jQuery); // end of jQuery name space
 
 $(document).ready(function() {
-    setTimeout(function(){$('body').addClass('loaded');}, 1000);
+    setTimeout(function(){$('body').addClass('loaded');}, 100);
 });

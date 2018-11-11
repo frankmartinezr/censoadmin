@@ -24,4 +24,25 @@ class Modulo_model extends CI_Model {
 
 		return $query->result();
 	}
+
+	function crear($idmodulo, $descripcion, $icono, $ruta, $activo, $parent, $usumodif)
+	{
+		$query = $this->db->query("usp_sismodulo 4, '$idmodulo', '$descripcion', '$icono', '$ruta', '$activo', '$parent', '$usumodif'");
+
+		return $query->result();
+	}
+
+	function eliminar($idmodulo)
+	{
+		$query = $this->db->query("usp_sismodulo 5, '$idmodulo', '', '', '', '', '', ''");
+
+		return $query->result();
+	}
+
+	function cambio($idmodulo, $activo)
+	{
+		$query = $this->db->query("usp_sismodulo 6, '$idmodulo', '', '', '', '$activo', '', ''");
+
+		return $query->result();
+	}
 }

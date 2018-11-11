@@ -8,14 +8,14 @@
         <!-- -->
         <ul class="collection with-header">
             <li class="collection-header">
-                <h4 class="center-align">Modulos</h4>
+                <h4 class="center-align">Marcas</h4>
             </li>
 
             <?php foreach ($registros as $reg): ?>
                 <li class="collection-item">
                     <div>
-                        <input class="check-status" type="checkbox" id="test<?= $reg->idmodulo; ?>" data-value='<?= json_encode($reg); ?>' <?= $reg->activo > 0? 'checked': ''; ?>/>
-                        <label for="test<?= $reg->idmodulo; ?>"><?= $reg->descripcion; ?></label>
+                        <input class="check-status" type="checkbox" id="test<?= $reg->idmarca; ?>" data-value='<?= json_encode($reg); ?>' <?= $reg->activo > 0? 'checked': ''; ?>/>
+                        <label for="test<?= $reg->idmarca; ?>"><?= $reg->descripcion; ?></label>
                         <div class="secondary-content">
                             <a href="#modal1" class="modal-trigger btn-edit"><i class="material-icons blue-text">edit</i></a>&nbsp;&nbsp;
                             <a href="#!" class="btn-delete"><i class="material-icons red-text">delete_forever</i></a>
@@ -34,35 +34,44 @@
 </div>
 </div>
 
+<!-- Modal agregar registro -->
+<div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5 class="green white-text center-align">Agregar</h5>
+        <div class="row">
+            <form action="<?= base_url('cat/marca/create'); ?>" method="POST" id="form_create">
+                <div class="input-field col s12">
+                    <input id="descripcion_add" name="descripcion" type="text" class="validate" data-length="50" maxlength="50" placeholder="" autocomplete="off" required>
+                    <label for="descripcion_add">*Descripción</label>
+                </div>
+                <button class="btn-floating btn-large waves-effect waves-light green" type="submit"><i class="material-icons">save</i></button>
+                <!-- campos ocultos -->
+                <input type="hidden" name="idmarca" value="0">
+                <input type="hidden" name="activo" value="0">
+                <input type="hidden" name="usumodif" value="<?= $this->session->userdata('user_id'); ?>">
+
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat "><u>CERRAR</u></a>
+    </div>
+</div>
+<!-- /Modal agregar registro -->
+
 <!-- Modal editar registro -->
 <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h5 class="blue white-text center-align">Editar</h5>
         <div class="row">
-            <form action="<?= base_url('adming/modulo/edit'); ?>" method="POST" id="form_edit">
+            <form action="<?= base_url('cat/marca/edit'); ?>" method="POST" id="form_edit">
                 <div class="input-field col s12">
                     <input id="descripcion" name="descripcion" type="text" class="validate" data-length="50" maxlength="50" placeholder="" autocomplete="off" required>
                     <label for="descripcion">*Descripción</label>
                 </div>
-                <div class="input-field col s12">
-                    <input id="icono" name="icono" type="text" class="validate" data-length="25" maxlength="25" placeholder="" autocomplete="off" required>
-                    <label for="icono">*Icono</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="ruta" name="ruta" type="text" class="validate" data-length="250" maxlength="250" placeholder="" autocomplete="off" required>
-                    <label for="ruta">*Ruta</label>
-                </div>
-                <div class="input-field col s12">
-                    <select id="parent" name="parent">
-                        <?php foreach ($categorias as $cat): ?>
-                            <option value="<?= $cat->idmodulo; ?>"><?= $cat->descripcion; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <label>*Categoria</label>
-                </div>
                 <button class="btn-floating btn-large waves-effect waves-light blue" type="submit"><i class="material-icons">edit</i></button>
                 <!-- campos ocultos -->
-                <input type="hidden" name="idmodulo" id="idmodulo" value="0">
+                <input type="hidden" name="idmarca" id="idmarca" value="0">
                 <input type="hidden" name="activo" id="activo" value="0">
                 <input type="hidden" name="usumodif" id="usumodif" value="<?= $this->session->userdata('user_id'); ?>">
 
@@ -75,47 +84,6 @@
 </div>
 <!-- /Modal editar registro -->
 
-<!-- Modal agregar registro -->
-<div id="modal2" class="modal modal-fixed-footer">
-    <div class="modal-content">
-        <h5 class="green white-text center-align">Agregar</h5>
-        <div class="row">
-            <form action="<?= base_url('adming/modulo/create'); ?>" method="POST" id="form_create">
-                <div class="input-field col s12">
-                    <input id="descripcion" name="descripcion" type="text" class="validate" data-length="50" maxlength="50" placeholder="" autocomplete="off" required>
-                    <label for="descripcion">*Descripción</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="icono" name="icono" type="text" class="validate" data-length="25" maxlength="25" placeholder="" autocomplete="off" required>
-                    <label for="icono">*Icono</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="ruta" name="ruta" type="text" class="validate" data-length="250" maxlength="250" placeholder="" autocomplete="off" required>
-                    <label for="ruta">*Ruta</label>
-                </div>
-                <div class="input-field col s12">
-                    <select id="parent" name="parent">
-                        <?php foreach ($categorias as $cat): ?>
-                            <option value="<?= $cat->idmodulo; ?>"><?= $cat->descripcion; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <label>*Categoria</label>
-                </div>
-                <button class="btn-floating btn-large waves-effect waves-light green" type="submit"><i class="material-icons">save</i></button>
-                <!-- campos ocultos -->
-                <input type="hidden" name="idmodulo" id="idmodulo" value="0">
-                <input type="hidden" name="activo" id="activo" value="0">
-                <input type="hidden" name="usumodif" id="usumodif" value="<?= $this->session->userdata('user_id'); ?>">
-
-            </form>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat "><u>CERRAR</u></a>
-    </div>
-</div>
-<!-- /Modal agregar registro -->
-
 <!-- fixed-btn -->
 <div class="fixed-action-btn">
     <a href="#modal2" class="btn-floating btn-large waves-effect waves-light green pulse modal-trigger"><i class="large material-icons">add</i></a>
@@ -123,19 +91,41 @@
 <!-- /fixed-btn -->
 </main>
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function() {
+
+    $("#form_create").submit(function(event) {
+        event.preventDefault();
+
+        var form    = $(this).serialize();
+        var action  = $(this).prop('action');
+        var method  = $(this).prop('method');
+
+        //console.log(method);
+        $.ajax({
+            url: action,
+            type: method,
+            data: form
+
+        }).done(function(response, textStatus, jqXHR) {
+            //console.log(response);
+            var json = $.parseJSON(response);
+            swal({ title: json.header, text: json.msg, icon: json.icon, button: "Aceptar" }).then((value) => { location.reload(); });
+
+        }).fail(function(jqXHR, textStatus, thrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            swal({ title: "Error", text: textStatus, icon: "error", button: "Aceptar" });
+        });
+    });
 
     $(".btn-edit").click(function(event) {
 
         var json    = $(this).siblings('input[name=jsonvalues]').data("value");
         json.activo = $(this).parent('div').siblings('input[type=checkbox]').is(':checked');
-
-        $("#idmodulo").val(json.idmodulo);
+        //console.log(json);
+        $("#idmarca").val(json.idmarca);
         $("#activo").val(json.activo);
         $("#descripcion").val(json.descripcion);
-        $("#icono").val(json.icono);
-        $("#ruta").val(json.ruta);
-        $("#parent").val(json.parent).material_select();
     });
 
     $("#form_edit").submit(function(event) {
@@ -154,7 +144,7 @@ $(document).ready(function(){
         }).done(function(response, textStatus, jqXHR) {
             //console.log(response);
             var json = $.parseJSON(response);
-            swal({ title: json.title, text: json.msg, icon: json.icon, button: "Aceptar" }).then((value) => { location.reload(); });
+            swal({ title: json.header, text: json.msg, icon: json.icon, button: "Aceptar" }).then((value) => { location.reload(); });
 
         }).fail(function(jqXHR, textStatus, thrown) {
             console.log(jqXHR);
@@ -163,39 +153,14 @@ $(document).ready(function(){
         });
     });
 
-    $("#form_create").submit(function(event) {
-        event.preventDefault();
-
-        var form    = $(this).serialize();
-        var action  = $(this).prop('action');
-        var method  = $(this).prop('method');
-
-        //console.log(method);
-        $.ajax({
-            url: action,
-            type: method,
-            data: form
-
-        }).done(function(response, textStatus, jqXHR) {
-            //console.log(response);
-            var json = $.parseJSON(response);
-            swal({ title: json.title, text: json.msg, icon: json.icon, button: "Aceptar" }).then((value) => { location.reload(); });
-
-        }).fail(function(jqXHR, textStatus, thrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            swal({ title: "Error", text: textStatus, icon: "error", button: "Aceptar" });
-        });
-    });
-
-    $(".check-status").change(function(event){
+    $(".check-status").change(function(event) {
 
         var json    = $(this).data("value");
         json.activo = $(this).is(':checked');
         
         //console.log(json);
         $.ajax({
-            url: "<?= base_url('adming/modulo/change'); ?>",
+            url: "<?= base_url('cat/marca/edit'); ?>",
             type: "POST",
             data: json
 
@@ -226,14 +191,14 @@ $(document).ready(function(){
             if (willDelete) {
                 //console.log(json);
                 $.ajax({
-                    url: "<?= base_url('adming/modulo/delete'); ?>",
+                    url: "<?= base_url('cat/marca/delete'); ?>",
                     type: "POST",
                     data: json
 
                 }).done(function(response, textStatus, jqXHR) {
                     //console.log(response);
                     var json = $.parseJSON(response);
-                    swal({ title: json.title, text: json.msg, icon: json.icon, button: "Aceptar" }).then((value) => { location.reload(); });
+                    swal({ title: json.header, text: json.msg, icon: json.icon, button: "Aceptar" }).then((value) => { location.reload(); });
 
                 }).fail(function(jqXHR, textStatus, thrown) {
                     console.log(jqXHR);
