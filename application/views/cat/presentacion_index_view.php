@@ -4,18 +4,18 @@
 <div class="col s12">
     <div class="card hoverable">
         <div class="card-content">
-        <!-- <span class="card-title center-align">Modulos de sistema</span> -->
+        <!--<span class="card-title center-align">Modulos de sistema</span>-->
         <!-- -->
         <ul class="collection with-header">
             <li class="collection-header">
-                <h4 class="center-align">Apoyos</h4>
+                <h4 class="center-align">Presentaciones</h4>
             </li>
 
             <?php foreach ($registros as $reg): ?>
                 <li class="collection-item">
                     <div>
-                        <input class="check-status" type="checkbox" id="test<?= $reg->idapoyo; ?>" data-value='<?= json_encode($reg); ?>' <?= $reg->activo > 0? 'checked': ''; ?>/>
-                        <label for="test<?= $reg->idapoyo; ?>"><?= $reg->descripcion; ?></label>
+                        <input class="check-status" type="checkbox" id="test<?= $reg->idpresentacion; ?>" data-value='<?= json_encode($reg); ?>' <?= $reg->activo > 0? 'checked': ''; ?>/>
+                        <label for="test<?= $reg->idpresentacion; ?>"><?= $reg->descripcion; ?>&nbsp;(<?= $reg->descmarca; ?>)</label>
                         <div class="secondary-content">
                             <a href="#modal1" class="modal-trigger btn-edit"><i class="material-icons blue-text">edit</i></a>&nbsp;&nbsp;
                             <a href="#!" class="btn-delete"><i class="material-icons red-text">delete_forever</i></a>
@@ -39,14 +39,14 @@
     <div class="modal-content">
         <h5 class="green white-text center-align">Agregar</h5>
         <div class="row">
-            <form action="<?= base_url('cat/apoyo/create'); ?>" method="POST" id="form_create">
+            <form action="<?= base_url('cat/presentacion/create'); ?>" method="POST" id="form_create">
                 <div class="input-field col s12">
-                    <select name="tipoapoyo_id">
-                        <?php foreach ($tipoapoyo as $tipo): ?>
-                            <option value="<?= $tipo->idtipoapoyo; ?>"><?= $tipo->descripcion; ?></option>
+                    <select name="marca_id">
+                        <?php foreach ($marcas as $tipo): ?>
+                            <option value="<?= $tipo->idmarca; ?>"><?= $tipo->descripcion; ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <label>*Tipo Apoyo</label>
+                    <label>*Marca</label>
                 </div>
                 <div class="input-field col s12">
                     <input id="descripcion_add" name="descripcion" type="text" class="validate" data-length="50" maxlength="50" placeholder="" autocomplete="off" required>
@@ -54,7 +54,7 @@
                 </div>
                 <button class="btn-floating btn-large waves-effect waves-light green" type="submit"><i class="material-icons">save</i></button>
                 <!-- campos ocultos -->
-                <input type="hidden" name="idapoyo" value="0">
+                <input type="hidden" name="idpresentacion" value="0">
                 <input type="hidden" name="activo" value="0">
                 <input type="hidden" name="usumodif" value="<?= $this->session->userdata('user_id'); ?>">
 
@@ -72,14 +72,14 @@
     <div class="modal-content">
         <h5 class="blue white-text center-align">Editar</h5>
         <div class="row">
-            <form action="<?= base_url('cat/apoyo/edit'); ?>" method="POST" id="form_edit">
+            <form action="<?= base_url('cat/presentacion/edit'); ?>" method="POST" id="form_edit">
                 <div class="input-field col s12">
-                    <select id="tipoapoyo_id" name="tipoapoyo_id">
-                        <?php foreach ($tipoapoyo as $tipo): ?>
-                            <option value="<?= $tipo->idtipoapoyo; ?>"><?= $tipo->descripcion; ?></option>
+                    <select id="marca_id" name="marca_id">
+                        <?php foreach ($marcas as $tipo): ?>
+                            <option value="<?= $tipo->idmarca; ?>"><?= $tipo->descripcion; ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <label>*Tipo Apoyo</label>
+                    <label>*Marca</label>
                 </div>
                 <div class="input-field col s12">
                     <input id="descripcion" name="descripcion" type="text" class="validate" data-length="50" maxlength="50" placeholder="" autocomplete="off" required>
@@ -87,7 +87,7 @@
                 </div>
                 <button class="btn-floating btn-large waves-effect waves-light blue" type="submit"><i class="material-icons">edit</i></button>
                 <!-- campos ocultos -->
-                <input type="hidden" name="idapoyo" id="idapoyo" value="0">
+                <input type="hidden" name="idpresentacion" id="idpresentacion" value="0">
                 <input type="hidden" name="activo" id="activo" value="0">
                 <input type="hidden" name="usumodif" id="usumodif" value="<?= $this->session->userdata('user_id'); ?>">
 
@@ -139,10 +139,10 @@ $(document).ready(function() {
         var json    = $(this).siblings('input[name=jsonvalues]').data("value");
         json.activo = $(this).parent('div').siblings('input[type=checkbox]').is(':checked');
         //console.log(json);
-        $("#idapoyo").val(json.idapoyo);
+        $("#idpresentacion").val(json.idpresentacion);
         $("#activo").val(json.activo);
+        $("#marca_id").val(json.marca_id);
         $("#descripcion").val(json.descripcion);
-        $("#tipoapoyo_id").val(json.tipoapoyo_id);
     });
 
     $("#form_edit").submit(function(event) {
@@ -177,14 +177,14 @@ $(document).ready(function() {
         
         //console.log(json);
         $.ajax({
-            url: "<?= base_url('cat/apoyo/edit'); ?>",
+            url: "<?= base_url('cat/presentacion/edit'); ?>",
             type: "POST",
             data: json
 
         }).done(function(response, textStatus, jqXHR) {
             //console.log(response);
             var json = $.parseJSON(response);
-            Materialize.toast(json.msg, 1800);
+            Materialize.toast(json.toast, 1800);
 
         }).fail(function(jqXHR, textStatus, thrown) {
             console.log(jqXHR);
@@ -208,7 +208,7 @@ $(document).ready(function() {
             if (willDelete) {
                 //console.log(json);
                 $.ajax({
-                    url: "<?= base_url('cat/apoyo/delete'); ?>",
+                    url: "<?= base_url('cat/presentacion/delete'); ?>",
                     type: "POST",
                     data: json
 

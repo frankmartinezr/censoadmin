@@ -108,9 +108,13 @@
       </div></li>
       <li><a class="waves-effect waves-light modal-trigger" href="#modal_perfil"><i class="material-icons">person</i>Perfil</a></li>
       <li><a class="waves-effect waves-light" href="<?= base_url('welcome/logout/1'); ?>"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
-      <!--<li><a class="subheader">Administración General</a></li>-->
-      <!--<li><a class="waves-effect" href="#!"><i class="material-icons">person</i>Modulos</a></li>-->
-      <?= $side_menu; ?>
+      <!-- Menú -->
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Menú</a></li>
+      <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
+        <?= $side_menu; ?>
+      </ul>
+      
     </ul>
     <!-- Modal Perfil -->
     <?= $perfil; ?>

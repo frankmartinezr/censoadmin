@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Apoyo extends CI_Controller {
+class Presentacion extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -25,7 +25,8 @@ class Apoyo extends CI_Controller {
 
 		if ($logged_in) {
 			#carga modelos necesarios:
-			$this->load->model('cat/apoyo_model');
+			$this->load->model('cat/presentacion_model');
+			$this->load->model('cat/marca_model');
 		}
 		else {
 			#no existe sesion activa
@@ -39,23 +40,23 @@ class Apoyo extends CI_Controller {
 		$data['menu'] = TRUE;
 		$data['perfil'] = $this->load->view('login/modal_perfil', '', TRUE);
 		$data['side_menu'] = $this->session->userdata('side_menu');
-		$data['registros'] = $this->apoyo_model->registros();
-		$data['tipoapoyo'] = $this->apoyo_model->tipos();
+		$data['registros'] = $this->presentacion_model->registros();
+		$data['marcas'] = $this->marca_model->registros();
 		
 		$this->load->view('templates/header', $data);
-		$this->load->view('cat/apoyo_index_view');
+		$this->load->view('cat/presentacion_index_view');
 		$this->load->view('templates/footer');
 	}
 
 	public function create()
 	{
-		$idapoyo		= $this->input->post('idapoyo');
+		$idpresentacion			= $this->input->post('idpresentacion');
 		$descripcion	= $this->input->post('descripcion');
-		$tipoapoyo_id	= $this->input->post('tipoapoyo_id');
+		$marca_id	= $this->input->post('marca_id');
 		$activo			= $this->input->post('activo');
 		$usumodif		= $this->input->post('usumodif');
 
-		$result = $this->apoyo_model->crear($idapoyo, $descripcion, $activo, $usumodif);
+		$result = $this->presentacion_model->crear($idpresentacion, $descripcion, $marca_id, $activo, $usumodif);
 
 		$json = get_object_vars($result[0]);
         echo json_encode($json);
@@ -63,13 +64,13 @@ class Apoyo extends CI_Controller {
 
 	public function edit()
 	{
-		$idapoyo		= $this->input->post('idapoyo');
+		$idpresentacion			= $this->input->post('idpresentacion');
 		$descripcion	= $this->input->post('descripcion');
-		$tipoapoyo_id	= $this->input->post('tipoapoyo_id');
+		$marca_id	= $this->input->post('marca_id');
 		$activo			= $this->input->post('activo');
 		$usumodif		= $this->input->post('usumodif');
 
-		$result = $this->apoyo_model->editar($idapoyo, $descripcion, $activo, $usumodif);
+		$result = $this->presentacion_model->editar($idpresentacion, $descripcion, $marca_id, $activo, $usumodif);
 
 		$json = get_object_vars($result[0]);
         echo json_encode($json);
@@ -77,8 +78,8 @@ class Apoyo extends CI_Controller {
 
 	public function delete()
 	{
-		$idapoyo = $this->input->post('idapoyo');
-		$result = $this->apoyo_model->eliminar($idapoyo);
+		$idpresentacion = $this->input->post('idpresentacion');
+		$result = $this->presentacion_model->eliminar($idpresentacion);
 
 		$json = get_object_vars($result[0]);
 		echo json_encode($json);

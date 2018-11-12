@@ -71,7 +71,7 @@ class Welcome extends CI_Controller {
 			$user = $this->session->userdata('user_cv');
 			$data['menu'] = TRUE;
 			$data['perfil'] = $this->load->view('login/modal_perfil', '', TRUE);
-			$data['side_menu'] = $this->menu($user);
+			$data['side_menu'] = $this->modulos($user);
 			$this->session->set_userdata('side_menu', $data['side_menu']);
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/main');
@@ -100,23 +100,17 @@ class Welcome extends CI_Controller {
 		echo json_encode($json);
 	}
 
-	private function menu($user)
+	private function modulos($user)
 	{
 		$menu = "";
 		$modulos = $this->login_model->modulos($user);
 
 		foreach ($modulos as $modulo) {
 
-			$data['header'] = $modulo->header;
-			$menu .= $this->load->view('login/modulo', $data, TRUE);
+			$data['header']=$modulo->header;
+			$data['body']=$this->login_model->menus($user, $modulo->idmodulo);
 
-			$menus = $this->login_model->menus($user, $modulo->idmodulo);
-
-			foreach ($menus as $submenu) {
-
-				$data['submenu'] = $submenu;
-				$menu .= $this->load->view('login/menu', $data, TRUE);
-			}
+			$menu .= $this->load->view('login/collapsible', $data, TRUE);
 		}
 
 		return $menu;

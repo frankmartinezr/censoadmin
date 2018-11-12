@@ -31,4 +31,11 @@ class Apoyo_model extends CI_Model {
 
 		return $query->result();
 	}
+
+	function tipos()
+	{
+		$query = $this->db->query("usp_appapoyo 5, '', '', '', ''");
+
+		return $query->result();
+	}
 }
